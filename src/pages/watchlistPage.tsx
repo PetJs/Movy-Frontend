@@ -14,11 +14,20 @@ export default function WatchlistPage() {
   const userId = localStorage.getItem("userId");
 
   const getWatchlist = async () => {
+  if (!userId) {
+    console.error("User ID is missing");
+    return;
+  }
     try {
       const response = await axiosInstance.get(`/watchlist/${userId}`);
       setWatchlist(response.data);
-    } catch (error) {
-      console.error("Error fetching user watchlist:", error);
+    } catch (error:any) {
+      if (error.response?.status === 404) {
+        console.error("Watchlist not found");
+        setWatchlist([]); 
+      } else {
+        console.error("Error fetching user watchlist:", error);
+      }
     } finally {
       setLoading(false);
     }
@@ -71,7 +80,7 @@ export default function WatchlistPage() {
     <div className="bg-[#CDBDCE]">
       <h1 className="text-2xl font-bold mb-4 text-white flex justify-center">Watchlist</h1>
       <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-        {loading
+        {loading || watchlist.length === 0
           ? placeholderCards.map((_, index) => (
               <div
                 key={index}

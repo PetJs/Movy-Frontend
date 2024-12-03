@@ -41,3 +41,24 @@ export interface Episode {
   overview: string;
   air_date: string;
 }
+
+export interface Profile {
+  user: {
+    pfp: string;
+    name: string;
+    email: string;
+  };
+  watchHistory: History[];
+  streak: {
+    current_streak: number;
+    last_updated: Date | null;
+  };
+}
+
+
+export interface History {
+  id: number;
+  movie_title: string;
+  poster_path: string;
+  watched_at: Date;
+}

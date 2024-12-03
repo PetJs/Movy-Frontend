@@ -1,20 +1,28 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+
+interface UserProfile {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  pfp: string; // Profile picture URL
+}
 // Create a context
 const UserProfileContext = createContext<any | undefined>(undefined);
 
 // Provider component
 export const UserProfileProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [profile, setProfile] = useState<any>(null);
+  const [user, setUser] = useState<any>(null);
 
   return (
-    <UserProfileContext.Provider value={{ profile, setProfile }}>
+    <UserProfileContext.Provider value={{ user, setUser }}>
       {children}
     </UserProfileContext.Provider>
   );
 };
 
-// Custom hook for using the UserProfileContext
+
 export const useUserProfile = () => {
   const context = useContext(UserProfileContext);
   if (context === undefined) {

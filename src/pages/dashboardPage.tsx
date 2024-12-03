@@ -6,7 +6,7 @@ import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../css/style.css'
 import axios from "axios";
 import Logo from "../assets/svg/logo.svg";
-import { Data, TVShowData } from "@/types";
+import { Data, TVShowData, Profile } from "@/types";
 import axiosInstance from "@/api/axios";
 
 export default function DashboardPage() {
@@ -20,12 +20,14 @@ export default function DashboardPage() {
   const [big, setBig] = useState<Data[]>([])
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("All");
+  const [profile, setProfile] = useState<Profile | null>(null);
 
   const navigate = useNavigate()
   const handleclick = () => {
     console.log("I'm click")
   }
 
+  const userId = localStorage.getItem("userId")
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = event.target.value;
@@ -194,8 +196,15 @@ export default function DashboardPage() {
       }
     }
 
-
-
+    const getUser = async () => {
+      try {
+        const response = await axiosInstance.get(`/profile/${userId}`); 
+        console.log(response.data)
+        setProfile(response.data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
     
     fetchAction()
     fetchTrending();
@@ -203,127 +212,137 @@ export default function DashboardPage() {
     fetchAnime()
     fetchHollywood()
     fetchComedy()
+    getUser();
   }, [])
   
   return (
     <>
       <div className=" relative bg-gradient-to-br from-[#9C4AA099] via-[#3D1B3F99] via-[#1A0C1B99] to-[#00000099] text-white">
-        <nav className="flex justify-between items-center w-[97%] mx-auto  ">
-          <div className="mr-4">
-            <img src={Logo} alt="Icon" className="m-2 md:w-40 w-40" />
-          </div>
-          <div className="relative flex items-center gap-2">
-            <select 
-              onChange={handleSelectChange}
-              className="absolute left-1 bg-[#EFEAEF] text-black rounded-l px-1 focus:outline-none w-16">
-              <option value="All">All</option>
-              <option value="Movies">Movies</option>
-              <option value="TV">TV series</option>
-            </select>
-
-            <input
-              onChange={handleChange}
-              type="text"
-              className="w-full md:w-[600px] bg-[#EFEAEF] rounded py-1 pl-20 pr-10 text-black"
-              placeholder="Type here..."
-            />
-
-            <div className="absolute right-3 text-black">
-              <button>
-                <FontAwesomeIcon icon={faSearch}  />
-              </button>
-            </div>
-
-            {searchData.length > 0 && (
-              <div className="absolute bg-[#FFFFFF] text-black w-full mt-1 rounded shadow-lg max-h-64 overflow-y-auto z-10 top-full left-0 transform translate-x-0 hide-scrollbar">
-                {searchData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="px-2 py-2 hover:bg-gray-700 cursor-pointer flex items-center space-x-3"
-                  >
-                    <button
-                      onClick={() => handleMovieClick(item)} 
-                      className="flex"
-                    >
-                      <img 
-                        src={`https://image.tmdb.org/t/p/w500${item.posterPath}`} 
-                        alt={item.title} 
-                        className="rounded w-12" 
-                      />
-                      <h2 className="text-lg text-left font-semibold truncate text-left ml-2 text-black">
-                        {item.title}
-                      </h2>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-          </div>
-
-          <div className="flex items-center gap-2 py-2">
-            <Link
-              to="/watchlist"
-              className="border-2 px-2 border-[#CDBDCE] ml-2 rounded text-white whitespace-nowrap"
-            >
-              <button>WatchList</button>
-            </Link>
-
-            <div className="bg-gray-600 flex items-center justify-center rounded-full p-1 w-10 h-10 ">
-              <Link to='/profile'>
-                <button>
-                    <FontAwesomeIcon icon={faUser} size="xl"  />
-                </button>
+        <header className="bg-[#281229]">
+          <nav className="flex justify-between  items-center w-[97%] mx-auto  ">
+            <div className="mr-4">
+              <Link to='/'>
+                <img src={Logo} alt="Icon" className="md:w-40 w-40" />
               </Link>
             </div>
-          </div>
-        </nav>
+            <div className="relative flex items-center gap-2">
+              <select 
+                onChange={handleSelectChange}
+                className="absolute left-1 bg-[#EFEAEF] text-black rounded-l px-1 focus:outline-none w-16">
+                <option value="All">All</option>
+                <option value="Movies">Movies</option>
+                <option value="TV">TV series</option>
+              </select>
 
-        <div className="relative flex flex-col lg:flex-row items-center lg:space-x-4">
-          <div className="flex-shrink-0 mb-4 lg:mb-0 relative w-full">
-            {big.length > 0 ? (
-              big[0]?.backdropPath ? (
-                <div className="relative w-full ">
-                  {/* Image */}
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${big[0].backdropPath}`}
-                    alt={big[0].title || "Movie Image"}
-                    className="w-full h-auto"
-                  />
+              <input
+                onChange={handleChange}
+                type="text"
+                className="w-full md:w-[600px] bg-[#EFEAEF] rounded py-1 pl-20 pr-10 text-black"
+                placeholder="Type here..."
+              />
 
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-12 h-12 text-white hover:text-gray-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+              <div className="absolute right-3 text-black">
+                <button>
+                  <FontAwesomeIcon icon={faSearch}  />
+                </button>
+              </div>
+
+              {searchData.length > 0 && (
+                <div className="absolute bg-[#FFFFFF] text-black w-full rounded shadow-lg max-h-64 overflow-y-auto z-10 top-full left-0 transform translate-x-0 hide-scrollbar">
+                  {searchData.map((item, index) => (
+                    <div
+                      key={index}
+                      className="px-2 py-2 hover:bg-gray-700 cursor-pointer flex items-center space-x-3"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M14.75 12l-6 4V8l6 4z"
-                      />
-                    </svg>
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent p-2">
-                    <h2 className="text-[#6D2E70] text-xl font-semibold">Your Next Favourite Movie Awaits</h2>
-                    <p 
-                      className="truncate"
-                      style={{ maxWidth: "120ch", wordWrap: "break-word" }}
-                    >Uncover hidden gems, track your watchlist, and stream effortlessly. Your personal movie companion is here</p>
-                  </div>
+                      <button
+                        onClick={() => handleMovieClick(item)} 
+                        className="flex"
+                      >
+                        <img 
+                          src={`https://image.tmdb.org/t/p/w500${item.posterPath}`} 
+                          alt={item.title} 
+                          className="rounded w-12" 
+                        />
+                        <h2 className="text-lg text-left font-semibold truncate text-left ml-2 text-black">
+                          {item.title}
+                        </h2>
+                      </button>
+                    </div>
+                  ))}
                 </div>
+              )}
+              
+            </div>
+
+            <div className="flex items-center gap-2 py-2">
+              <Link
+                to="/watchlist"
+                className="border-2 px-2 border-[#CDBDCE] ml-2 rounded text-white whitespace-nowrap"
+              >
+                <button>WatchList</button>
+              </Link>
+
+              <div className="flex items-center justify-center rounded-full p-1 w-12 h-12 ">
+                <Link to='/profile'>
+                  <button>
+                    {profile?.user?.pfp? (
+                      <img src={profile.user.pfp} alt="Profile"  />
+                    ) : (
+                      <FontAwesomeIcon icon={faUser} size="xl" />
+                    )}
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </nav>
+
+          <div className="relative flex flex-col lg:flex-row items-center lg:space-x-4">
+            <div className="flex-shrink-0 lg:mb-0 relative w-full">
+              {big.length > 0 ? (
+                big[0]?.backdropPath ? (
+                  <div className="relative w-full ">
+                    {/* Image */}
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${big[0].backdropPath}`}
+                      alt={big[0].title || "Movie Image"}
+                      className="w-full h-auto"
+                    />
+
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-12 h-12 text-white hover:text-gray-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M14.75 12l-6 4V8l6 4z"
+                        />
+                      </svg>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black to-transparent p-2">
+                      <h2 className="text-[#6D2E70] text-xl font-semibold">Your Next Favourite Movie Awaits</h2>
+                      <p 
+                        className="truncate"
+                        style={{ maxWidth: "120ch", wordWrap: "break-word" }}
+                      >Uncover hidden gems, track your watchlist, and stream effortlessly. Your personal movie companion is here</p>
+                    </div>
+                  </div>
+                ) : (
+                  <p>No backdrop image available for {big[0]?.title || "this movie"}</p>
+                )
               ) : (
-                <p>No backdrop image available for {big[0]?.title || "this movie"}</p>
-              )
-            ) : (
-              <p>No movie data available</p>
-            )}
+                <p>No movie data available</p>
+              )}
+            </div>
           </div>
-        </div>
+        </header>
+        
         {/* THE FILTERING PART */}
         <div className="p-2 min-h-screen">
             <div className="text-xl">

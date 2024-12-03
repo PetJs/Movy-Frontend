@@ -1,11 +1,11 @@
 import axios from "axios";
 import axiosInstance from "@/api/axios";
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Data } from "@/types";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Watchlist from "../assets/svg/Add to wishlist.svg"
 import Logo from "../assets/svg/logo.svg";
+import Bookmark from "../assets/svg/bookmark.svg"
 
 // Placeholder Component
 const PlaceholderCard = () => (
@@ -23,11 +23,11 @@ const MoviePage: React.FC = () => {
   const [loadingRecommendations, setLoadingRecommendations] = useState(true);
   const [watchlist, setWatchlist] = useState([]);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const placeholderCards = Array.from({ length: 10 }, (_, i) => i);
+  
 
   const getUserIdFromLocalStorage = () => {
     const userId = localStorage.getItem("userId");
@@ -51,25 +51,18 @@ const MoviePage: React.FC = () => {
     }
   
     setLoadingCast(true);
-    
+    console.log(movie)
     try {
       const res = await axiosInstance.post("/add-watchlist", {
         user_id: Number(userId),
         movie_id: movie.movie_id,
         title: movie.title,
-        release_year: movie.release_date ? movie.release_date.split("-")[0] : 'Unknown',
-        rating: movie.rating,
         overview: movie.overview,
         posterPath: movie.posterPath,
       });
       console.log(res.data)
       setWatchlist(res.data);
       setIsInWatchlist(true);
-      setShowPopup(true);
-  
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 5000);
     } catch (err) {
       console.error("Error adding to watchlist:", err);
     } finally {
@@ -126,6 +119,7 @@ const MoviePage: React.FC = () => {
   };
 
   const movie = location.state as Data;
+  const genres = Array.isArray(movie.genres) ? movie.genres.join(', ') : '';
 
   useEffect(() => {
     if (movie?.movie_id) {
@@ -140,8 +134,10 @@ const MoviePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9C4AA099] via-[#3D1B3F99] via-[#1A0C1B99] to-[#00000099]">
-      <div className="flex">
-        <img src={Logo} alt="Icon" className="m-2 md:w-40 w-36" />
+      <div className="mr-4">
+        <Link to='/'>
+          <img src={Logo} alt="Icon" className="md:w-40 w-40" />
+        </Link>
       </div>
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:gap-5">
         <img
@@ -151,7 +147,7 @@ const MoviePage: React.FC = () => {
         />
         <div className="w-full md:w-auto">
           <h1 className="text-xl font-bold md:mt-0 mt-2">{movie.title}</h1>
-          <p>Genre: {movie.genres?.join(", ") ?? 'Unknown'}</p> 
+          <p>Genre: {genres || 'No genres available'}</p> 
           <p>{movie.release_date}</p>
           <p>Rating {movie.rating}</p>
           <div className="flex gap-6  mt-4">
@@ -163,15 +159,14 @@ const MoviePage: React.FC = () => {
             </button>
             <button
               onClick={() => handleAddToWatchlist(movie)}
-              className="bg-black rounded text-white px-2 py-1"
+              className="text-black"
             >
-              <FontAwesomeIcon icon={faBookmark} />
+              <img
+                src={isInWatchlist ? Bookmark : Watchlist}
+                alt="Watchlist Icon"
+                className="md:w-10 w-8"
+              />
             </button>
-            {isInWatchlist && showPopup && (
-              <div className="mt-2 text-white bg-green-500 p-2 rounded">
-                Added to watchlist
-              </div>
-            )}
           </div>
           <p>Overview: {movie.overview}</p>
         </div>

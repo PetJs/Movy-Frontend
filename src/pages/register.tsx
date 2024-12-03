@@ -150,8 +150,8 @@ export default function Register() {
                     placeholder="Confirm Password"
                   />
                 </div>
-                <div className="flex bg-[#F7931D] justify-center mx-auto border-none w-[75%] p-1 rounded mb-2 font-semibold text-lg text-[#FFFFFF]">
-                  <button type="submit">Register</button>
+                <div >
+                  <button type="submit" className="flex bg-[#F7931D] justify-center mx-auto border-none w-[75%] p-1 rounded mb-2 font-semibold text-lg text-[#FFFFFF]">Register</button>
                 </div>
               </div>
             </form>

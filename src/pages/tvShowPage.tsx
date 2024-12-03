@@ -1,9 +1,10 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Season } from "@/types";
+import Logo from "../assets/svg/logo.svg";
 
 const TVShowPage = () => {
   const { state } = useLocation();
-  const { isTVShow, title, posterPath, overview, rating, seasons, tv_id } = state;
+  const {title, posterPath, overview, rating, seasons, tv_id } = state;
   const navigate = useNavigate();
 
   const getUserIdFromLocalStorage = () => {
@@ -31,6 +32,12 @@ const TVShowPage = () => {
 
   return (
     <div >
+      <div className="mr-4">
+        <Link to='/'>
+          <img src={Logo} alt="Icon" className="md:w-40 w-40" />
+        </Link>
+      </div>
+      
       <div className="flex items-start gap-5">
         <img
           src={`https://image.tmdb.org/t/p/w500${posterPath}`}
@@ -49,7 +56,7 @@ const TVShowPage = () => {
         {seasons &&
           seasons.map((season: Season, seasonIndex: number) => (
             <div key={season.season_id} className="season">
-              <h2>Season {seasonIndex + 1}</h2>
+              <h2>Season {seasonIndex}</h2>
               <p>Total Episodes: {season.episode_count}</p>
 
               <div className="episodes">
@@ -64,7 +71,7 @@ const TVShowPage = () => {
                       <p>Air Date: {episode.air_date}</p>
                       <button
                         onClick={() =>
-                          handleWatchNowClick(tv_id, seasonIndex + 1, episodeIndex + 1)
+                          handleWatchNowClick(tv_id, seasonIndex, episodeIndex + 1)
                         }
                         className="bg-black rounded text-white px-2 py-1"
                       >

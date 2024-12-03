@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axiosInstance from "@/api/axios";  // Assuming this is your axios instance.
+import Logo from "../assets/svg/logo.svg";
 
 const StreamingPage: React.FC = () => {
   const [streamUrl, setStreamUrl] = useState<string | null>(null);
@@ -53,6 +54,11 @@ const StreamingPage: React.FC = () => {
 
   return (
     <div className="h-screen bg-gradient-to-br from-[#9C4AA099] via-[#3D1B3F99] via-[#1A0C1B99] to-[#00000099]">
+      <div className="mr-4">
+        <Link to='/'>
+          <img src={Logo} alt="Icon" className="md:w-40 w-40" />
+        </Link>
+      </div>
       {loading ? (
         <div>Loading video...</div>
       ) : error ? (
