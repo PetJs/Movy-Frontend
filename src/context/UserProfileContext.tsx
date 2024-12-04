@@ -1,14 +1,14 @@
-/* import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 
-interface UserProfile {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  pfp: string; // Profile picture URL
-}
-// Create a context
+// //interface UserProfile {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   pfp: string; // Profile picture URL
+// }
+// // Create a context
 const UserProfileContext = createContext<any | undefined>(undefined);
 
 // Provider component
@@ -30,4 +30,3 @@ export const useUserProfile = () => {
   }
   return context;
 };
- */
