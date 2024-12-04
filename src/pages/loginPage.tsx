@@ -18,7 +18,8 @@ export default function Login() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
-  
+  const [showSuccessPopUp, setShowSuccessPopUp] = useState<boolean>(false);
+  const [showErrorPopUp, setShowErrorPopUp] = useState<boolean>(false);
   const navigate = useNavigate();
 
   console.log(localStorage.getItem('userId'))
@@ -60,16 +61,18 @@ export default function Login() {
       const response = await axiosInstance.post('/login', loginData);
 
       if (response.status === 201) {
-        setPopUp(true)
+        setShowSuccessPopUp(true);
         setSuccess('Login successful');
         setError('');
         const userId = response.data.userId;
         localStorage.setItem('userId', userId);
 
         setTimeout(() => {
+          setShowSuccessPopUp(false);
           navigate('/');
         }, 2000);
       } else {
+        setShowErrorPopUp(true);
         setError('Unexpected response status.');
       }
     } catch (err) {
@@ -130,8 +133,9 @@ export default function Login() {
               </p>
             </div>
 
-            {success && popUp && <PopUp text={`${success} 🎊🎊`} />}
-            {validationErrors && popUp && <PopUp text={`${error} ❌❌`} />}
+            {showSuccessPopUp && <PopUp text={`${success} 🎊🎊`} />}
+            {showErrorPopUp && <PopUp text={`${error} ❌❌`} />}
+
           </div>
         </div>
       </div>
