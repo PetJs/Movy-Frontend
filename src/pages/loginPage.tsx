@@ -5,6 +5,7 @@ import Apple from "../assets/svg/apple.svg";
 import Google from "../assets/svg/googlr.svg";
 import Facebook from "../assets/svg/faceboook.svg";
 import Logo from "../assets/svg/logo.svg";
+import { PopUp } from '@/assets/component/popUp';
 
 interface ValidationErrors {
   email?: string;
@@ -17,7 +18,10 @@ export default function Login() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+  
   const navigate = useNavigate();
+
+  console.log(localStorage.getItem('userId'))
 
   const validateForm = (): boolean => {
     const errors: ValidationErrors = {};
@@ -56,16 +60,15 @@ export default function Login() {
       const response = await axiosInstance.post('/login', loginData);
 
       if (response.status === 201) {
+        setPopUp(true)
         setSuccess('Login successful');
         setError('');
-
         const userId = response.data.userId;
-
         localStorage.setItem('userId', userId);
 
         setTimeout(() => {
           navigate('/');
-        }, 1000);
+        }, 2000);
       } else {
         setError('Unexpected response status.');
       }
@@ -100,7 +103,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="p-2 rounded-md w-full bg-[#B59DB6] border-none"
-                  placeholder="Password"
+                  placeholder="Min of 8 characters"
                 />
 
                 <div className="">
@@ -127,8 +130,8 @@ export default function Login() {
               </p>
             </div>
 
-            {success && <p className="text-green-500">{success}</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            {success && popUp && <PopUp text={`${success} 🎊🎊`} />}
+            {validationErrors && popUp && <PopUp text={`${error} ❌❌`} />}
           </div>
         </div>
       </div>

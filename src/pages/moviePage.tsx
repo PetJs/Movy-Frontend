@@ -21,7 +21,7 @@ const MoviePage: React.FC = () => {
   const [recommendations, setRecommendations] = useState<any[]>([]);
   const [loadingCast, setLoadingCast] = useState(true);
   const [loadingRecommendations, setLoadingRecommendations] = useState(true);
-  const [watchlist, setWatchlist] = useState([]);
+  // const [watchlist, setWatchlist] = useState([]);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,7 +61,6 @@ const MoviePage: React.FC = () => {
         posterPath: movie.posterPath,
       });
       console.log(res.data)
-      setWatchlist(res.data);
       setIsInWatchlist(true);
     } catch (err) {
       console.error("Error adding to watchlist:", err);

@@ -366,7 +366,7 @@ export default function DashboardPage() {
               : trendingMovies.map((item: Data) => (
                   <div
                     key={item.movie_id}
-                    className="relative flex-shrink-0 bg-gray-200 rounded shadow-md hover:bg-gray-300 cursor"
+                    className="relative flex-shrink-0 rounded transition-colors duration-300 ease-in-out cursor"
                   >
                     <button onClick={() => handleMovieClick(item)}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
@@ -398,7 +398,7 @@ export default function DashboardPage() {
               : actionMovies.map((item: Data) => (
                 <div
                 key={item.movie_id}
-                className="relative flex-shrink-0 bg-gray-200 rounded shadow-md hover:bg-gray-300 cursor"
+                className="relative flex-shrink-0 rounded cursor"
               >
                 <button onClick={() => handleMovieClick(item)}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
@@ -429,7 +429,7 @@ export default function DashboardPage() {
               : anime.map((item: Data) => (
                 <div
                 key={item.movie_id}
-                className="relative flex-shrink-0 bg-gray-200 rounded shadow-md hover:bg-gray-300 cursor"
+                className="relative flex-shrink-0 rounded cursor"
               >
                 <button onClick={() => handleMovieClick(item)}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
@@ -461,7 +461,7 @@ export default function DashboardPage() {
                   <div
                     onClick={handleclick}
                     key={item.movie_id}
-                    className="relative flex-shrink-0 bg-gray-200 rounded shadow-md hover:bg-gray-300 cursor"
+                    className="relative flex-shrink-0 rounded cursor"
                   >
                     <button onClick={() => handleMovieClick(item)}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
@@ -493,7 +493,7 @@ export default function DashboardPage() {
                   <div
                     onClick={handleclick}
                     key={item.movie_id}
-                    className="relative flex-shrink-0 bg-gray-200 rounded shadow-md hover:bg-gray-300 cursor"
+                    className="relative flex-shrink-0 rounded cursor"
                   >
                     <button onClick={() => handleMovieClick(item)}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
@@ -525,7 +525,7 @@ export default function DashboardPage() {
                   <div
                     onClick={handleclick}
                     key={item.movie_id}
-                    className="relative flex-shrink-0 bg-gray-200 rounded shadow-md hover:bg-gray-300 cursor"
+                    className="relative flex-shrink-0 rounded cursor"
                   >
                     <button onClick={() => handleMovieClick(item)}>
                       <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />

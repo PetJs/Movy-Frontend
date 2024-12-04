@@ -40,6 +40,7 @@ const UserProfile: React.FC = () => {
       })
 
       if(result.status === 200){
+        localStorage.clear();
         navigate('/login')
       }
     }catch(error){

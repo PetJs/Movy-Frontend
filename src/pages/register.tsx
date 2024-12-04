@@ -5,6 +5,7 @@ import Apple from "../assets/svg/apple.svg"
 import Google from "../assets/svg/googlr.svg"
 import Facebook from "../assets/svg/faceboook.svg"
 import Logo from "../assets/svg/logo.svg"
+import { PopUp } from '@/assets/component/popUp';
 
 
 interface ValidationErrors {
@@ -22,7 +23,8 @@ export default function Register() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
-  const navigate = useNavigate(); // To navigate after successful registration
+  const [popUp, setPopUp] = useState(false)
+  const navigate = useNavigate(); 
 
   const validateForm = (): boolean => {
     const errors: ValidationErrors = {};
@@ -80,6 +82,7 @@ export default function Register() {
 
       if (response.status === 200 || response.status === 201) {
         setSuccess('User created successfully!');
+        setPopUp(true)
         setError('');
         
         const userId = response.data.user.id; 
@@ -172,8 +175,8 @@ export default function Register() {
               <p className='mt-2'>Already have an account? <Link to="/login"><span className='font-semibold text-[#F7931D] ml-2'>Sign In</span></Link> </p>
             </div>
 
-            {success && <p className="text-green-500">{success}</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            {success && popUp && <PopUp text={`${success} 🎊🎊`} />}
+            {validationErrors && popUp && <PopUp text={`${error} ❌❌`} />}
           </div>
         </div>
       </div>
