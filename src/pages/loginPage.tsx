@@ -134,7 +134,7 @@ export default function Login() {
             </div>
 
             {showSuccessPopUp && <PopUp text={`${success} 🎊🎊`} />}
-            {showErrorPopUp && <PopUp text={`${error} ❌❌`} />}
+            {validationErrors && showErrorPopUp && <PopUp text={`${error} ❌❌`} />}
 
           </div>
         </div>
