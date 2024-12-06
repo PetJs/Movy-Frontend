@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import '../css/style.css'
-import axios from "axios";
 import Logo from "../assets/svg/logo.svg";
 import { Data, TVShowData, Profile } from "@/types";
 import axiosInstance from "@/api/axios";
@@ -85,7 +84,7 @@ export default function DashboardPage() {
 
     try{
       const endpoint = filter === "TV" ? "/tv-search" : "/search";
-      const results = await axios.get(`${endpoint}`, {
+      const results = await axiosInstance.get(`${endpoint}`, {
       params: {query}
     })
       
