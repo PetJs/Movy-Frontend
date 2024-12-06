@@ -6,6 +6,7 @@ import { Data } from "@/types";
 import Watchlist from "../assets/svg/Add to wishlist.svg"
 import Logo from "../assets/svg/logo.svg";
 import Bookmark from "../assets/svg/bookmark.svg"
+import StarRating from "@/assets/component/rating";
 
 // Placeholder Component
 const PlaceholderCard = () => (
@@ -128,7 +129,7 @@ const MoviePage: React.FC = () => {
   }, [movie]);
 
   if (!movie) {
-    return <div>Loading...</div>; // Handle missing movie state
+    return <div>Loading...</div>; 
   }
 
   return (
@@ -148,7 +149,7 @@ const MoviePage: React.FC = () => {
           <h1 className="text-xl font-bold md:mt-0 mt-2">{movie.title}</h1>
           <p>Genre: {genres || 'No genres available'}</p> 
           <p>{movie.release_date}</p>
-          <p>Rating {movie.rating}</p>
+          <StarRating rating={movie.rating}/>
           <div className="flex gap-6  mt-4">
             <button
               onClick={handleWatchNowClick}

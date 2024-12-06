@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Season } from "@/types";
 import Logo from "../assets/svg/logo.svg";
+import StarRating from "@/assets/component/rating";
 
 const TVShowPage = () => {
   const { state } = useLocation();
@@ -31,39 +32,39 @@ const TVShowPage = () => {
   };
 
   return (
-    <div >
+    <div className="min-h-screen bg-gradient-to-br from-[#9C4AA099] via-[#3D1B3F99] via-[#1A0C1B99] to-[#00000099]">
       <div className="mr-4">
         <Link to='/'>
           <img src={Logo} alt="Icon" className="md:w-40 w-40" />
         </Link>
       </div>
       
-      <div className="flex items-start gap-5">
+      <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:gap-5 mb-4">
         <img
           src={`https://image.tmdb.org/t/p/w500${posterPath}`}
           alt={title}
-          className="w-72"
+          className="w-72 rounded"
         />
         <div>
-          <h1>{title}</h1>
+          <h1 className="font-semibold text-xl">{title}</h1>
           <p>{overview}</p>
-          <p>Rating: {rating}</p>
+          <StarRating rating={rating} />
         </div>
       </div>
       
       {/* Display Seasons and Episodes */}
-      <div className="flex">
+      <div className="">
         {seasons &&
           seasons.map((season: Season, seasonIndex: number) => (
-            <div key={season.season_id} className="season">
-              <h2>Season {seasonIndex}</h2>
+            <div key={season.season_id} >
+              <h2 className="font-semibold text-lg">Season {seasonIndex}</h2>
               <p>Total Episodes: {season.episode_count}</p>
 
-              <div className="episodes">
+              <div className="grid">
                 <h3>Episodes:</h3>
                 {season.episodes &&
                   season.episodes.map((episode, episodeIndex) => (
-                    <div key={episode.episode_id} className="flex gap-4 mb-4">
+                    <div key={episode.episode_id} className=" gap-4 mb-4">
                       <h4>
                         Episode {episodeIndex + 1}: {episode.title}
                       </h4>
@@ -73,7 +74,7 @@ const TVShowPage = () => {
                         onClick={() =>
                           handleWatchNowClick(tv_id, seasonIndex, episodeIndex + 1)
                         }
-                        className="bg-black rounded text-white px-2 py-1"
+                        className="bg-[#F7931D] rounded text-white px-2 py-1"
                       >
                         Watch Now
                       </button>

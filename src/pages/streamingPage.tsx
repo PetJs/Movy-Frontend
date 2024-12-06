@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axiosInstance from "@/api/axios";  // Assuming this is your axios instance.
+import axiosInstance from "@/api/axios"; 
 import Logo from "../assets/svg/logo.svg";
 
 const StreamingPage: React.FC = () => {
@@ -9,8 +9,7 @@ const StreamingPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const location = useLocation();
 
-  // Extract params from location state
-  const { userId, videoId, isTVShow, seasonNumber, episodeNumber } = location.state || {};
+  const { userId, videoId, isTVShow, seasonNumber, episodeNumber, original_title } = location.state || {};
 
   useEffect(() => {
     const fetchStream = async () => {
@@ -22,18 +21,11 @@ const StreamingPage: React.FC = () => {
 
       try {
         setLoading(true);
-
-        // Construct the endpoint based on whether it's a TV show or movie
         const endpoint = isTVShow
           ? `/stream/tv/${userId}?videoId=${videoId}&seasonNumber=${seasonNumber}&episodeNumber=${episodeNumber}`
           : `/stream/${userId}?videoId=${videoId}`;
 
-        console.log("Constructed endpoint:", endpoint);
-
-        // Make the API request
-        const response = await axiosInstance.get(endpoint);
-
-        // Check if the response contains the correct stream URL
+          const response = await axiosInstance.get(endpoint); 
         if (isTVShow && response.data?.streamTvUrl) {
           setStreamUrl(response.data.streamTvUrl);
         } else if (!isTVShow && response.data?.streamUrl) {
@@ -64,12 +56,14 @@ const StreamingPage: React.FC = () => {
       ) : error ? (
         <div className="error">{error}</div>
       ) : streamUrl ? (
-        <iframe
-          src={streamUrl}
-          frameBorder="0"
-          allowFullScreen
-          className="flex justify-center w-full h-[500px]"
-        ></iframe>
+        <div>
+          <h2 className="flex items-center justify-center font-semibold">{original_title}</h2>
+          <iframe
+            src={streamUrl}
+            allowFullScreen
+            className="flex justify-center w-full h-[500px]"
+          ></iframe>
+        </div>
       ) : (
         <div>No stream available.</div>
       )}
