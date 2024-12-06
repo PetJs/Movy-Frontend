@@ -97,15 +97,15 @@ export default function Login() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="p-2 rounded-md w-full bg-[#B59DB6] border-none"
-                  placeholder="Email"
+                  className="p-2 rounded-md w-full bg-[#B59DB6] border-none placeholder-white"
+                  placeholder="Email "
                 />
 
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="p-2 rounded-md w-full bg-[#B59DB6] border-none"
+                  className="p-2 rounded-md w-full bg-[#B59DB6] border-none placeholder-white"
                   placeholder="Min of 8 characters"
                 />
 
