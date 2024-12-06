@@ -195,9 +195,9 @@ const MoviePage: React.FC = () => {
       </div>
 
       {/* RECOMMENDATIONS */}
-      <div className="m-6">
+      <div >
         <h2 className="text-lg font-bold">Movies You May Like</h2>
-        <div className="flex overflow-x-scroll gap-4 rounded-md hide-scrollbar mt-4">
+        <div className="flex overflow-x-scroll gap-4 rounded-md hide-scrollbar">
           {loadingRecommendations
             ? placeholderCards.map((_, index) => <PlaceholderCard key={index} />)
             : recommendations.map((movie: Data) => (

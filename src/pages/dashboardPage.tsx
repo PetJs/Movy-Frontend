@@ -85,7 +85,7 @@ export default function DashboardPage() {
 
     try{
       const endpoint = filter === "TV" ? "/tv-search" : "/search";
-      const results = await axios.get(`http://localhost:8080${endpoint}`, {
+      const results = await axios.get(`${endpoint}`, {
       params: {query}
     })
       
