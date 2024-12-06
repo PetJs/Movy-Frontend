@@ -74,6 +74,7 @@ export default function Login() {
       } else {
         setShowErrorPopUp(true);
         setError('Unexpected response status.');
+        console.log({error})
       }
     } catch (err) {
       setError('Login failed');
@@ -134,7 +135,7 @@ export default function Login() {
             </div>
 
             {showSuccessPopUp && <PopUp text={`${success} 🎊🎊`} />}
-            {validationErrors && showErrorPopUp && <PopUp text={`${error} ❌❌`} />}
+            {validationErrors && showErrorPopUp && <PopUp text={`${validationErrors} ❌❌`} />}
 
           </div>
         </div>
