@@ -74,7 +74,7 @@ export default function Login() {
       } else {
         setShowErrorPopUp(true);
         setError('Unexpected response status.');
-        localstorage.clear():
+        localstorage.clear()
       }
     } catch (err) {
       setError('Login failed');
