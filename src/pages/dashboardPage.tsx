@@ -343,7 +343,7 @@ export default function DashboardPage() {
         </header>
         
         {/* THE FILTERING PART */}
-        <div className="p-2 min-h-screen mt-4">
+        <div className="p-2 min-h-screen ">
             <div className="text-xl ">
                 <button onClick={handleclick} className="mb-4 flex">
                     TRENDING
@@ -365,10 +365,10 @@ export default function DashboardPage() {
               : trendingMovies.map((item: Data) => (
                   <div
                     key={item.movie_id}
-                    className="relative flex-shrink-0 rounded transition-colors duration-300 ease-in-out cursor w-full h-auto"
+                    className="relative flex-shrink-0 rounded transition-colors duration-300 ease-in-out cursor "
                   >
-                    <button onClick={() => handleMovieClick(item)}>
-                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded " />
+                    <button onClick={() => handleMovieClick(item)} >
+                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded w-52 h-auto md:w-full md:h-auto" />
                       <h2 className="text-lg font-semibold truncate text-left ml-2 text-black">{item.original_title}</h2>
                     </button>
                     
@@ -382,7 +382,7 @@ export default function DashboardPage() {
                     <p className="ml-4"> &gt; </p>
                 </button>
             </div>
-          <div className="flex overflow-x-scroll gap-4  rounded-md hide-scrollbar ">
+          <div className="flex overflow-x-scroll gap-4  rounded-md hide-scrollbar mb-4">
             {loading
               ? placeholderCards.map((_, index) => (
                   <div
@@ -397,10 +397,10 @@ export default function DashboardPage() {
               : actionMovies.map((item: Data) => (
                 <div
                 key={item.movie_id}
-                className="relative flex-shrink-0 rounded cursor w-full h-auto"
+                className="relative flex-shrink-0 rounded cursor "
               >
                 <button onClick={() => handleMovieClick(item)}>
-                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
+                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded w-52 h-auto md:w-full md:h-auto" />
                       <h2 className="text-lg font-semibold truncate text-left ml-2 text-black">{item.original_title}</h2>
                 </button>
               </div>
@@ -428,10 +428,10 @@ export default function DashboardPage() {
               : anime.map((item: Data) => (
                 <div
                 key={item.movie_id}
-                className="relative flex-shrink-0 rounded cursor w-full h-auto"
+                className="relative flex-shrink-0 rounded cursor "
               >
                 <button onClick={() => handleMovieClick(item)}>
-                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
+                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded w-52 h-auto md:w-full md:h-auto" />
                       <h2 className="text-lg font-semibold truncate text-left ml-2 text-black">{item.title}</h2>
                     </button>
               </div>
@@ -460,10 +460,10 @@ export default function DashboardPage() {
                   <div
                     onClick={handleclick}
                     key={item.movie_id}
-                    className="relative flex-shrink-0 rounded cursor w-full h-auto"
+                    className="relative flex-shrink-0 rounded cursor "
                   >
                     <button onClick={() => handleMovieClick(item)}>
-                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
+                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded w-52 h-auto md:w-full md:h-auto" />
                       <h2 className="text-lg font-semibold truncate text-left ml-2 text-black">{item.original_title}</h2>
                     </button>
                   </div>
@@ -492,10 +492,10 @@ export default function DashboardPage() {
                   <div
                     onClick={handleclick}
                     key={item.movie_id}
-                    className="relative flex-shrink-0 rounded cursor w-full h-auto"
+                    className="relative flex-shrink-0 rounded cursor"
                   >
                     <button onClick={() => handleMovieClick(item)}>
-                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
+                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded w-52 h-auto md:w-full md:h-auto" />
                       <h2 className="text-lg font-semibold truncate text-left ml-2 text-black">{item.original_title}</h2>
                     </button>
                   </div>
@@ -524,10 +524,10 @@ export default function DashboardPage() {
                   <div
                     onClick={handleclick}
                     key={item.movie_id}
-                    className="relative flex-shrink-0 rounded cursor w-full h-auto"
+                    className="relative flex-shrink-0 rounded cursor "
                   >
                     <button onClick={() => handleMovieClick(item)}>
-                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded" />
+                      <img src={`https://image.tmdb.org/t/p/w500${item.backdropPath}`} alt={item.original_title} className="rounded w-52 h-auto md:w-full md:h-auto" />
                       <h2 className="text-lg font-semibold truncate text-left ml-2 text-black">{item.original_title}</h2>
                     </button>
                   </div>
